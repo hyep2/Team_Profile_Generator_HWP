@@ -10,6 +10,9 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+//pass in an array containing all employee objects
+employeeArr = [];
+
 function createManager() {
   inquirer.prompt([
     {
@@ -35,11 +38,74 @@ function createManager() {
   ])
   .then(ans => {
     const manager = new Manager(ans.managerName, ans.managerId, ans.managerEmail, ans.managerOfficeNumber);
-    return manager;
+    employeeArr.push(manager);
   })
   .catch(err=>console.log(err))
 
 }
+
+function createEngineer() {
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'engineerName',
+      message: "What is the engineer's name?"
+    },
+    {
+      type: 'input',
+      name: 'engineerId',
+      message: "What is the engineer's Id?"
+    },
+    {
+      type: 'input',
+      name: 'engineerEmail',
+      message: "What is the engineer's email?"
+    },
+    {
+      type: 'input',
+      name: 'engineerGithub',
+      message: "What is the engineer's github username?"
+    }
+  ])
+    .then(ans => {
+      const engineer = new Engineer(ans.engineerName, ans.engineerId, ans.engineerEmail, ans.engineerGithub);
+      employeeArr.push(engineer);
+    })
+    .catch(err => console.log(err))
+
+}
+
+function createIntern() {
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'internName',
+      message: "What is the intern's name?"
+    },
+    {
+      type: 'input',
+      name: 'internId',
+      message: "What is the intern's Id?"
+    },
+    {
+      type: 'input',
+      name: 'internEmail',
+      message: "What is the intern's email?"
+    },
+    {
+      type: 'input',
+      name: 'internSchool',
+      message: "What is the intern's school name?"
+    }
+  ])
+    .then(ans => {
+      const intern = new Intern(ans.internName, ans.internId, ans.internEmail, ans.internSchool);
+      employeeArr.push(intern);
+    })
+    .catch(err => console.log(err))
+
+}
+
 createManager();
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
