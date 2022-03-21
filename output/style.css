@@ -7,14 +7,20 @@ body {
   background-color: white;
 }
 
+.team-area {
+  
+  margin: 3em auto; 
+  flex-wrap: wrap;
+}
+
 .employee-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 50%;
+  width: 80%;
   margin: 1em;
   color: black;
   background-color: grey;
+  max-width: 280px;
+  border: none;
+
 }
 
 .card-body {
