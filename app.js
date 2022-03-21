@@ -9,6 +9,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+const Choices = require("inquirer/lib/objects/choices");
 
 //pass in an array containing all employee objects
 employeeArr = [];
@@ -39,11 +40,48 @@ function createManager() {
   .then(ans => {
     const manager = new Manager(ans.managerName, ans.managerId, ans.managerEmail, ans.managerOfficeNumber);
     employeeArr.push(manager);
+    addOtherMembers();
   })
   .catch(err=>console.log(err))
 
 }
 
+//prompts user whether they want to add more members, and if they do, they have option to choose engineer or intern
+function addOtherMembers() {
+  inquirer.prompt([
+    {
+      type: 'list',
+      name: 'questAdd',
+      message: 'Would you like to add more team members?',
+      choices: ['Yes', 'No']
+    }
+  ])
+  .then(ans=> {
+    if(ans.questAdd==='Yes') {
+      inquirer.prompt([{
+        type: 'list',
+        name: 'memberType',
+        message: 'Which type of team member would you like to add?',
+        choices: ['Engineer', 'Intern']
+      }])
+      .then(ans=> {
+        if (ans.memberType === 'Engineer') {
+          createEngineer();
+        }
+        else {
+          createIntern();
+        }
+      })
+    }
+    else {
+      //enter code to 
+    }
+    }
+  )
+  .catch(err=>console.log(err))
+}
+
+//prompts user about engineer info and creates engineer obj
 function createEngineer() {
   inquirer.prompt([
     {
@@ -70,11 +108,13 @@ function createEngineer() {
     .then(ans => {
       const engineer = new Engineer(ans.engineerName, ans.engineerId, ans.engineerEmail, ans.engineerGithub);
       employeeArr.push(engineer);
+      addOtherMembers();
     })
     .catch(err => console.log(err))
 
 }
 
+//prompts user about intern info and creates intern obj
 function createIntern() {
   inquirer.prompt([
     {
@@ -101,12 +141,14 @@ function createIntern() {
     .then(ans => {
       const intern = new Intern(ans.internName, ans.internId, ans.internEmail, ans.internSchool);
       employeeArr.push(intern);
+      addOtherMembers();
     })
     .catch(err => console.log(err))
 
 }
 
-createManager();
+createIntern();
+
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
