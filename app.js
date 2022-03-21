@@ -119,7 +119,7 @@ function createEngineer() {
     {
       type: 'input',
       name: 'engineerGithub',
-      message: "What is the engineer's github username?"
+      message: "What is the engineer's github link?"
     }
   ])
     .then(ans => {
