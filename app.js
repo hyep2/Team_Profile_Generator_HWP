@@ -12,32 +12,11 @@ const render = require("./lib/htmlRenderer");
 const Choices = require("inquirer/lib/objects/choices");
 
 
-//last step where it takes the array and put info call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-function makeTeamHtml() {
-  let renderHtml = render(employeeArr);
-  fs.writeFile(path.join(OUTPUT_DIR, 'team.html'), renderHtml, err=>{
-    if (err) {
-      console.log(err)
-    }
-    else {
-      console.log('The file has been saved under output folder')
-    }
-  })
-
-}
 //pass in an array containing all employee objects
 employeeArr = [];
 
-function createManager() {
+//very first function that starts this whole team making process by prompting manager for their info and calls the addOtherMembers function
+function startAndCreateManager() {
   inquirer.prompt([
     {
       type: 'input',
@@ -105,6 +84,20 @@ function addOtherMembers() {
 }
 
 
+//last step that renders the employee array to return a block of html and creates a team.html file under the output folder
+function makeTeamHtml() {
+  let renderHtml = render(employeeArr);
+  fs.writeFile(path.join(OUTPUT_DIR, 'team.html'), renderHtml, err => {
+    if (err) {
+      console.log(err)
+    }
+    else {
+      console.log('The file has been saved under output folder')
+    }
+  })
+
+}
+
 //prompts user about engineer info and creates engineer obj
 function createEngineer() {
   inquirer.prompt([
@@ -171,6 +164,6 @@ function createIntern() {
 
 }
 
-createManager();
+startAndCreateManager()
 
 
